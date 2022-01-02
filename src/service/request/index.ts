@@ -63,7 +63,7 @@ class HCRequest {
     })
   }
 
-  request<T>(config: HCRequestConfig): Promise<T> {
+  request<T>(config: HCRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       // 1.单个请求对请求config的处理
       if (config.interceptors?.requestInterceptor) {
@@ -78,7 +78,7 @@ class HCRequest {
       this.instance.request<any, T>(config).then((res) => {
         // 1.单个请求对数据的处理
         if (config.interceptors?.responseInterceptor) {
-          // res = config.interceptors.responseInterceptor(res)
+          res = config.interceptors.responseInterceptor(res)
         }
         // 2.将showLoading设置true，这样不会影响下一个请求
         this.showLoading = DEAFULT_LOADING
@@ -93,19 +93,19 @@ class HCRequest {
 
   }
 
-  get<T>(config: HCRequestConfig): Promise<T> {
+  get<T>(config: HCRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
 
-  post<T>(config: HCRequestConfig): Promise<T> {
+  post<T>(config: HCRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
 
-  delete<T>(config: HCRequestConfig): Promise<T> {
+  delete<T>(config: HCRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
 
-  patch<T>(config: HCRequestConfig): Promise<T> {
+  patch<T>(config: HCRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PATCH' })
   }
 }

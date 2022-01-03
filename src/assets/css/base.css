@@ -7,3 +7,13 @@ html,body,#app{
   width: 100%;
   height: 100%;
 }
+
+.flex{
+  display: flex;
+}
+.aic{
+  align-items: center;
+}
+.vam{
+  vertical-align: middle;
+}

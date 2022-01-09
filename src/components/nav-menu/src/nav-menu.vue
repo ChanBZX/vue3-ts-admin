@@ -24,7 +24,7 @@
                 <span>{{ item.name }}</span>
               </template>
               <template v-for="subitem in item.children" :key="subitem.id">
-                <el-menu-item :index="subitem.id + ''">
+                <el-menu-item :index="subitem.id + ''" @click="handleMenuItemClick(subitem)">
                   <span>{{ subitem.name }}</span>
                 </el-menu-item>
               </template>
@@ -39,6 +39,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useStore } from '../../../store/index'
+import { useRouter } from 'vue-router'
 import { Calendar } from '@element-plus/icons-vue'
 
 const props = defineProps({
@@ -50,6 +51,18 @@ const props = defineProps({
 
 const store = useStore()
 const userMenus = computed(() => store.state.login.userMenus)
+
+const router = useRouter()
+
+const handleMenuItemClick = (item: any) => {
+  console.log(item);
+  console.log(router);
+
+
+  router.push({
+    path: item.url ?? '/not-found'
+  })
+}
 </script> 
 
 <style lang="less" scoped>

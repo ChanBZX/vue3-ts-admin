@@ -3,6 +3,7 @@ import { Module } from "vuex";
 import { accountLoginRequest, requestUserInfoById, requestUserMenusByRoleId } from "../../service/login/login"
 import localCache from "../../utils/cache";
 import router from "../../router"
+import { mapMenusToRoutes } from '../../utils/map-menus'
 
 import { IAccount } from "../../service/login/types"
 import { ILoginState } from "./types"
@@ -26,6 +27,13 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
+
+      // userMenus => routes
+      const routes = mapMenusToRoutes(userMenus)
+      // routes => router.main.children
+      routes.forEach(el => {
+        router.addRoute('Main', el)
+      })
     }
   },
   actions: {
